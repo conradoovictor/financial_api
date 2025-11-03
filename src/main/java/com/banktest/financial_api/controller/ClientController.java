@@ -36,7 +36,7 @@ public class ClientController {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> finsert(@RequestBody Client objClient){
+    public ResponseEntity<Void> insert(@RequestBody Client objClient){
         objClient = service.insert(objClient);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objClient.getId()).toUri();
         return ResponseEntity.created(uri).build();
