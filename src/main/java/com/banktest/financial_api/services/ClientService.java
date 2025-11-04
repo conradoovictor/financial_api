@@ -20,21 +20,22 @@ public class ClientService {
         return repo.findAll();
     }
 
-    public Client findById(String id){
+    public Client findById(String id) {
         Optional<Client> obj = repo.findById(id);
-            return obj.orElseThrow(()-> new ObjectNotFoundException("Cliente não encontrado"));
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado"));
     }
 
-    public Client insert (Client obj){
+    public Client insert(Client obj) {
         Optional<Client> uniqueCPF = repo.findByCpf(obj.getCpf());
-        if(uniqueCPF.isPresent()){
+        if (uniqueCPF.isPresent()) {
             throw new IllegalArgumentException("CPF já cadastrado");
         }
         return repo.save(obj);
     }
 
-    public void delete (String id){
+    public void delete(String id) {
         findById(id);
         repo.deleteById(id);
     }
+
 }

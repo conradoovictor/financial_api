@@ -15,7 +15,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.banktest.financial_api.domain.entities.Client;
 import com.banktest.financial_api.services.ClientService;
 
-
 @RestController
 @RequestMapping(value = "/clients")
 public class ClientController {
@@ -29,23 +28,24 @@ public class ClientController {
         return ResponseEntity.ok().body(list);
     }
 
-    @RequestMapping(value = "/{id}", method=RequestMethod.GET)
-    public ResponseEntity<Client> findById(@PathVariable String id){
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Client> findById(@PathVariable String id) {
         Client obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
-    
+
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody Client objClient){
-        objClient = service.insert(objClient);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objClient.getId()).toUri();
+    public ResponseEntity<Void> insert(@RequestBody Client objClient) {
+        Client client = service.insert(objClient);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(client.getId())
+                .toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Client>delete(@PathVariable String id){
+    public ResponseEntity<Client> delete(@PathVariable String id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-    
+
 }

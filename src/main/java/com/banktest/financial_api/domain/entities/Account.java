@@ -3,32 +3,34 @@ package com.banktest.financial_api.domain.entities;
 import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.banktest.financial_api.domain.enums.AccountType;
 
-public class Account implements Serializable {
+@Document(value = "accounts")
+public class Account implements Serializable{
     private static final long serialVersionUID = 1L;
+
 
     @Id
     private String id;
 
-    private String accountNumber;
+    private String accNumber;
     private AccountType type;
     private Double balance;
-    private String clientId;
+    
 
-    public Account() {
-    }
-
-    public Account(String id, String accountNumber, AccountType type, Double balance, String clientId) {
+    public Account(String id, String accNumber, AccountType type, Double balance) {
         this.id = id;
-        this.accountNumber = accountNumber;
+        this.accNumber = accNumber;
         this.type = type;
         this.balance = balance;
-        this.clientId = clientId;
     }
 
-        public static long getSerialversionuid() {
+    public Account(){
+    }
+
+    public static long getSerialversionuid() {
         return serialVersionUID;
     }
 
@@ -40,12 +42,12 @@ public class Account implements Serializable {
         this.id = id;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public String getAccNumber() {
+        return accNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setAccNumber(String accNumber) {
+        this.accNumber = accNumber;
     }
 
     public AccountType getType() {
@@ -63,16 +65,6 @@ public class Account implements Serializable {
     public void setBalance(Double balance) {
         this.balance = balance;
     }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-
 
     @Override
     public int hashCode() {
@@ -98,5 +90,7 @@ public class Account implements Serializable {
             return false;
         return true;
     }
+
+    
 
 }

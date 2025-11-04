@@ -13,12 +13,12 @@ public class Client implements Serializable {
 
     @Id
     private String id;
-    
+
     private String name;
 
     @Indexed(unique = true)
     private String cpf;
-    
+
     private LocalDate birthDate;
 
     public Client() {
