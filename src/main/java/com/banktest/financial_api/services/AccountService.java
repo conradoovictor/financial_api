@@ -37,7 +37,7 @@ public class AccountService {
     }
 
     private String generateAccountNumber() {
-        int random = (int) (Math.random() * 90000) + 10000;
+        int random = (int) (Math.random() * 900) + 100;
         return String.valueOf(random);
     }
 
@@ -45,6 +45,11 @@ public class AccountService {
         Account account = repo.findById(clientId)
                 .orElseThrow(() -> new RuntimeException("Conta não encontrada para o cliente informado"));
         return account.getBalance();
+    }
+
+    public void delete(String id) {
+        findById(id);
+        repo.deleteById(id);
     }
 
 }
