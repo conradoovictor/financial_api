@@ -1,6 +1,7 @@
 package com.banktest.financial_api.services;
 
 import java.time.Instant;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,20 +19,24 @@ public class TransactionService {
     @Autowired
     private AccountService service;
 
+    public List<Transaction> findAll() {
+        return repo.findAll();
+    }
+
     public Transaction transaction(Transaction obj) {
         if (obj.getAccDestiny().equals(obj.getAccOrigin())) {
             throw new RuntimeException("A transação deve ser feita através de contas distintas");
         }
 
-        Account origin = service.findById(obj.getAccOrigin());
-        Account destiny = service.findById(obj.getAccDestiny());
+        Account origin = service.findByAccountNumber(obj.getAccOrigin());
+        Account destiny = service.findByAccountNumber(obj.getAccDestiny());
 
         if (origin.getBalance() < obj.getValue()) {
             throw new RuntimeException("Saldo insuficiente para efetuar a transação");
         }
 
         origin.setBalance(origin.getBalance() - obj.getValue());
-        origin.setBalance(destiny.getBalance() + obj.getValue());
+        destiny.setBalance(destiny.getBalance() + obj.getValue());
 
         service.update(origin);
         service.update(destiny);

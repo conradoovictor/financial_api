@@ -54,7 +54,14 @@ public class AccountService {
     }
 
     public Account update(Account account) {
+        Account existing = findByAccountNumber(account.getAccNumber());
+        existing.setBalance(account.getBalance());
         return repo.save(account);
+    }
+
+    public Account findByAccountNumber(String accNumber) {
+        Optional<Account> obj = repo.findByAccNumber(accNumber);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Conta não encontrada"));
     }
 
 }
