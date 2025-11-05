@@ -64,4 +64,10 @@ public class AccountService {
         return obj.orElseThrow(() -> new ObjectNotFoundException("Conta não encontrada"));
     }
 
+    public Account deposit(String accNumber, Double value){
+        Account acc = findByAccountNumber(accNumber);
+        acc.setBalance(acc.getBalance() + value);
+        return repo.save(acc);
+    }
+
 }

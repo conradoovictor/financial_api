@@ -77,4 +77,16 @@ public class AccountController {
         return ResponseEntity.noContent().build();
 
     }
+
+    @RequestMapping(value = "/{accNumber}/deposit", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> deposit(@PathVariable String accNumber, @RequestBody Map<String, Double> body){
+        Double value = body.get("value");
+        Account acc = service.deposit(accNumber, value);
+
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("Número da conta", acc.getAccNumber());
+        response.put("Novo saldo", acc.getBalance());
+
+        return ResponseEntity.ok(response);
+    }
 }
