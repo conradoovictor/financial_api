@@ -1,55 +1,44 @@
 package com.banktest.financial_api.services;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.banktest.financial_api.domain.entities.Account;
-import com.banktest.financial_api.domain.enums.AccountType;
-import com.banktest.financial_api.repositories.AccountRepository;
-import com.banktest.financial_api.services.exception.ObjectNotFoundException;
+import com.banktest.financial_api.domain.entities.Transaction;
+import com.banktest.financial_api.repositories.TransactionRepository;
 
 @Service
-public class AccountService {
+public class TransactionService {
 
     @Autowired
-    private AccountRepository repo;
+    private TransactionRepository repo;
 
     @Autowired
-    private ClientService clientService;
+    private AccountService service;
 
-    public List<Account> findAll() {
-        return repo.findAll();
-    }
+    public Transaction transaction(Transaction obj) {
+        if (obj.getAccDestiny().equals(obj.getAccOrigin())) {
+            throw new RuntimeException("A transação deve ser feita através de contas distintas");
+        }
 
-    public Account findById(String id) {
-        Optional<Account> obj = repo.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado"));
-    }
+        Account origin = service.findById(obj.getAccOrigin());
+        Account destiny = service.findById(obj.getAccDestiny());
 
-    public Account createAccount(String clientId, AccountType type) {
-        var client = clientService.findById(clientId);
-        String number = generateAccountNumber();
-        Account acc = new Account(client.getId(), number, type, 0.0);
-        return repo.save(acc);
-    }
+        if (origin.getBalance() < obj.getValue()) {
+            throw new RuntimeException("Saldo insuficiente para efetuar a transação");
+        }
 
-    private String generateAccountNumber() {
-        int random = (int) (Math.random() * 900) + 100;
-        return String.valueOf(random);
-    }
+        origin.setBalance(origin.getBalance() - obj.getValue());
+        origin.setBalance(destiny.getBalance() + obj.getValue());
 
-    public Double consultBalance(String clientId) {
-        Account account = repo.findById(clientId)
-                .orElseThrow(() -> new RuntimeException("Conta não encontrada para o cliente informado"));
-        return account.getBalance();
-    }
+        service.update(origin);
+        service.update(destiny);
 
-    public void delete(String id) {
-        findById(id);
-        repo.deleteById(id);
+        obj.setMoment(Instant.now());
+        return repo.save(obj);
+
     }
 
 }

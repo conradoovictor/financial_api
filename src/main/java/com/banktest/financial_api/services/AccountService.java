@@ -29,10 +29,11 @@ public class AccountService {
         return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado"));
     }
 
-    public Account createAccount(String clientId, AccountType type) {
+    public Account createAccount(String clientId, AccountType type, Double balance) {
         var client = clientService.findById(clientId);
         String number = generateAccountNumber();
-        Account acc = new Account(client.getId(), number, type, 0.0);
+        double initialBalance = (balance == null) ? 0.0 : balance;
+        Account acc = new Account(client.getId(), number, type, initialBalance);
         return repo.save(acc);
     }
 
@@ -50,6 +51,10 @@ public class AccountService {
     public void delete(String id) {
         findById(id);
         repo.deleteById(id);
+    }
+
+    public Account update(Account account) {
+        return repo.save(account);
     }
 
 }

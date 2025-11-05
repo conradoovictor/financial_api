@@ -37,7 +37,7 @@ public class AccountController {
     public ResponseEntity<Account> createAccount(
             @PathVariable String clientId,
             @RequestBody Account body) {
-        Account acc = service.createAccount(clientId, body.getType());
+        Account acc = service.createAccount(clientId, body.getType(), body.getBalance());
         return ResponseEntity.ok(acc);
     }
 
