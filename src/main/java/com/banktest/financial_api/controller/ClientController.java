@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.banktest.financial_api.domain.dtos.ClientDTO;
 import com.banktest.financial_api.domain.entities.Client;
 import com.banktest.financial_api.services.ClientService;
 
@@ -23,28 +24,28 @@ public class ClientController {
     private ClientService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Client>> findAll() {
-        List<Client> list = service.findAll();
+    public ResponseEntity<List<ClientDTO>> findAll() {
+        List<ClientDTO> list = service.findAll().stream().map(ClientDTO::new).toList();
         return ResponseEntity.ok().body(list);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Client> findById(@PathVariable String id) {
-        Client obj = service.findById(id);
-        return ResponseEntity.ok().body(obj);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> insert(@RequestBody Client objClient) {
         Client client = service.insert(objClient);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(client.getId())
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(client.getClientId())
                 .toUri();
         return ResponseEntity.created(uri).build();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Client> delete(@PathVariable String id) {
-        service.delete(id);
+    @RequestMapping(value = "{clientId}", method = RequestMethod.GET)
+    public ResponseEntity<ClientDTO> findByClientId(@PathVariable Integer clientId) {
+        Client obj = service.findByClientId(clientId);
+        return ResponseEntity.ok().body(new ClientDTO(obj));
+    }
+
+    @RequestMapping(value = "/{clientId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Client> delete(@PathVariable Integer clientId) {
+        service.delete(clientId);
         return ResponseEntity.noContent().build();
     }
 

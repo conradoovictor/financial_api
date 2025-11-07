@@ -20,22 +20,30 @@ public class ClientService {
         return repo.findAll();
     }
 
-    public Client findById(String id) {
-        Optional<Client> obj = repo.findById(id);
+    public Client findByClientId(Integer clientId) {
+        Optional<Client> obj = repo.findByClientId(clientId);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado"));
     }
 
     public Client insert(Client obj) {
-        Optional<Client> uniqueCPF = repo.findByCpf(obj.getCpf());
+        Optional<Client> uniqueCPF = repo.findByClientCpf(obj.getClientCpf());
         if (uniqueCPF.isPresent()) {
             throw new IllegalArgumentException("CPF já cadastrado");
+        }
+        if (obj.getClientId() == null) {
+            Integer nextId = generateClientId();
+            obj.setClientId(nextId);
         }
         return repo.save(obj);
     }
 
-    public void delete(String id) {
-        findById(id);
-        repo.deleteById(id);
+    public Integer generateClientId() {
+        return repo.findAll().stream().map(Client::getClientId).filter(id -> id != null).max(Integer::compareTo)
+                .map(id -> id + 100).orElse(1);
     }
 
+     public void delete(Integer clientId) {
+        findByClientId(clientId);
+        repo.deleteByClientId(clientId);
+    }
 }

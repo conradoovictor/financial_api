@@ -1,5 +1,6 @@
 package com.banktest.financial_api.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -9,6 +10,8 @@ import com.banktest.financial_api.domain.entities.Account;
 
 @Repository
 public interface AccountRepository extends MongoRepository<Account, String> {
+    List<Account> findByClientId(Integer clientId);
     Optional<Account> findByAccNumber(String accNumber);
+    Optional<Account> deleteByAccNumber(String accNumber);
 
 }
