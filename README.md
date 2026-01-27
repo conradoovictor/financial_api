@@ -24,7 +24,7 @@ A aplicação **não possui interface gráfica**, sendo consumida por meio de fe
   * Uma conta pertence a **apenas um cliente**
 * Realização de **transferências entre contas**
 
-  * Não permite transferências entre contas do **mesmo cliente**
+  * São permitidas apenas transferências entre contas do **mesmo cliente**
   * Validação para impedir que o saldo fique negativo
 
 ### Funcionalidades auxiliares (apoio a testes)
@@ -117,10 +117,4 @@ Este projeto foi desenvolvido com foco em:
 * Implementação de testes automatizados
 * Padronização de DTOs em Request e Response
 
----
 
-Se quiser, no próximo passo posso:
-
-* Ajustar o texto para um tom ainda mais corporativo
-* Revisar tecnicamente o README como se fosse um avaliador
-* Sugerir melhorias simples no código que valorizam muito o projeto em processo seletivo
