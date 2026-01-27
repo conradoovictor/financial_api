@@ -1,5 +1,4 @@
 # financial_api
-# financial_api
 
 
 # API REST – Sistema Bancário
