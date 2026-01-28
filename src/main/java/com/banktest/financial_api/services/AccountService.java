@@ -24,7 +24,7 @@ public class AccountService {
         return repo.findAll();
     }
 
-    public Account createAccount(Integer clientId, AccountType type, Double balance) {
+    public Account createAccount(Integer clientId, AccountType type) {
         var client = service.findByClientId(clientId);
         String number = generateAccountNumber();
         Account acc = new Account(client.getClientId(), number, type, 0.0);
@@ -50,15 +50,24 @@ public class AccountService {
         Optional<Account> obj = repo.findByAccNumber(accNumber);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Conta não encontrada"));
     }
-    public Account deposit(String accNumber, Double value){
-        Account acc = findByAccountNumber(accNumber);
-        acc.setBalance(acc.getBalance() + value);
-        return repo.save(acc);
-    }
 
-     public void delete(String accNumber) {
+    public void delete(String accNumber) {
         findByAccountNumber(accNumber);
         repo.deleteByAccNumber(accNumber);
+    }
+
+    public Double getBalance(String accNumber) {
+        Account acc = findByAccountNumber(accNumber);
+        return acc.getBalance();
+    }
+
+    public Account deposit(String accNumber, Double value) {
+
+        Account acc = findByAccountNumber(accNumber);
+
+        acc.setBalance(acc.getBalance() + value);
+
+        return repo.save(acc);
     }
 
 }

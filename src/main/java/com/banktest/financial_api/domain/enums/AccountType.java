@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public enum AccountType {
 
     CORRENTE,
-    DEPOSITO,
-    TRANSFERENCIA;
+    DEPOSITO;
 
     @JsonCreator
     public static AccountType fromString(String value) {

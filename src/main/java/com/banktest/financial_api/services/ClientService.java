@@ -30,10 +30,8 @@ public class ClientService {
         if (uniqueCPF.isPresent()) {
             throw new IllegalArgumentException("CPF já cadastrado");
         }
-        if (obj.getClientId() == null) {
-            Integer nextId = generateClientId();
-            obj.setClientId(nextId);
-        }
+
+        obj.setClientId(generateClientId());
         return repo.save(obj);
     }
 
@@ -42,7 +40,7 @@ public class ClientService {
                 .map(id -> id + 100).orElse(1);
     }
 
-     public void delete(Integer clientId) {
+    public void delete(Integer clientId) {
         findByClientId(clientId);
         repo.deleteByClientId(clientId);
     }

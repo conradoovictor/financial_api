@@ -6,7 +6,7 @@ import java.time.Instant;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.banktest.financial_api.domain.enums.AccountType;
+import com.banktest.financial_api.domain.enums.TransactionType;
 
 @Document(value = "transactions")
 public class Transaction implements Serializable {
@@ -17,13 +17,13 @@ public class Transaction implements Serializable {
     private String accOrigin;
     private String accDestiny;
     private Double value;
-    private AccountType type;
+    private TransactionType type;
     private Instant moment;
 
     public Transaction() {
     }
 
-    public Transaction(String id, String accOrigin, String accDestiny, Double value, AccountType type, Instant moment) {
+    public Transaction(String id, String accOrigin, String accDestiny, Double value, TransactionType type, Instant moment) {
         this.id = id;
         this.accOrigin = accOrigin;
         this.accDestiny = accDestiny;
@@ -68,11 +68,11 @@ public class Transaction implements Serializable {
         this.value = value;
     }
 
-    public AccountType getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(AccountType type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 

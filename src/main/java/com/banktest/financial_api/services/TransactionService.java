@@ -9,8 +9,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.banktest.financial_api.domain.dtos.AccountDTO.DepositRequestDTO;
+import com.banktest.financial_api.domain.dtos.TransactionDTO.TransactionRequestDTO;
 import com.banktest.financial_api.domain.entities.Account;
 import com.banktest.financial_api.domain.entities.Transaction;
+import com.banktest.financial_api.domain.enums.TransactionType;
 import com.banktest.financial_api.repositories.TransactionRepository;
 
 @Service
@@ -26,26 +29,29 @@ public class TransactionService {
         return repo.findAll();
     }
 
-    public Transaction transaction(Transaction obj) {
-        if (obj.getAccDestiny().equals(obj.getAccOrigin())) {
+    public Transaction execute(TransactionRequestDTO dto) {
+        if (dto.getAccDestiny().equals(dto.getAccOrigin())) {
             throw new RuntimeException("A transação deve ser feita através de contas distintas");
         }
 
-        Account origin = service.findByAccountNumber(obj.getAccOrigin());
-        Account destiny = service.findByAccountNumber(obj.getAccDestiny());
+        Account origin = service.findByAccountNumber(dto.getAccOrigin());
+        Account destiny = service.findByAccountNumber(dto.getAccDestiny());
 
-        if (origin.getBalance() < obj.getValue()) {
+        if (origin.getBalance() < dto.getValue()) {
             throw new RuntimeException("Saldo insuficiente para efetuar a transação");
         }
 
-        origin.setBalance(origin.getBalance() - obj.getValue());
-        destiny.setBalance(destiny.getBalance() + obj.getValue());
+        origin.setBalance(origin.getBalance() - dto.getValue());
+        destiny.setBalance(destiny.getBalance() + dto.getValue());
 
-        service.update(origin);
-        service.update(destiny);
+        Transaction tx = new Transaction();
+        tx.setAccOrigin(dto.getAccOrigin());
+        tx.setAccDestiny(dto.getAccDestiny());
+        tx.setValue(dto.getValue());
+        tx.setMoment(Instant.now());
+        tx.setType(TransactionType.TRANSFERENCIA);
 
-        obj.setMoment(Instant.now());
-        return repo.save(obj);
+        return repo.save(tx);
 
     }
 
@@ -84,5 +90,22 @@ public class TransactionService {
 
         return response;
     }
-}
 
+    public Transaction deposit(DepositRequestDTO dto) {
+
+        Account acc = service.findByAccountNumber(dto.getAccNumber());
+
+        acc.setBalance(acc.getBalance() + dto.getValue());
+        service.update(acc);
+
+        Transaction tx = new Transaction();
+        tx.setAccOrigin(null);
+        tx.setAccDestiny(acc.getAccNumber());
+        tx.setValue(dto.getValue());
+        tx.setType(TransactionType.DEPOSITO);
+        tx.setMoment(Instant.now());
+
+        return repo.save(tx);
+    }
+
+}

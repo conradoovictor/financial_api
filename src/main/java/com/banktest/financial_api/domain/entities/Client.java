@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="clients")
+@Document(collection = "clients")
 
 public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -23,7 +23,7 @@ public class Client implements Serializable {
     private String clientCpf;
     private LocalDate birthDate;
 
-    public Client(){
+    public Client() {
     }
 
     public Client(Integer clientId, String clientName, String clientCpf, LocalDate birthDate) {
@@ -102,5 +102,4 @@ public class Client implements Serializable {
         return true;
     }
 
-    
 }

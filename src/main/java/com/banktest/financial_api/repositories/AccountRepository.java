@@ -11,7 +11,9 @@ import com.banktest.financial_api.domain.entities.Account;
 @Repository
 public interface AccountRepository extends MongoRepository<Account, String> {
     List<Account> findByClientId(Integer clientId);
+
     Optional<Account> findByAccNumber(String accNumber);
+
     Optional<Account> deleteByAccNumber(String accNumber);
 
 }

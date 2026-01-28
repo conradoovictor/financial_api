@@ -10,7 +10,8 @@ import com.banktest.financial_api.domain.entities.Transaction;
 
 @Repository
 public interface TransactionRepository extends MongoRepository<Transaction, String> {
-    
+
     List<Transaction> findByAccOriginAndMomentBetween(String accOrigin, Instant start, Instant end);
+
     List<Transaction> findByAccDestinyAndMomentBetween(String accDestiny, Instant start, Instant end);
 }
