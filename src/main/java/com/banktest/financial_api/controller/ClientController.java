@@ -17,7 +17,7 @@ import com.banktest.financial_api.domain.entities.Client;
 import com.banktest.financial_api.services.ClientService;
 
 @RestController
-@RequestMapping(value = "/clients")
+@RequestMapping(value = "/api/v1/clients")
 public class ClientController {
 
     @Autowired

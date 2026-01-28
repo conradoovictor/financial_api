@@ -21,7 +21,7 @@ import com.banktest.financial_api.services.ClientService;
 import com.banktest.financial_api.services.TransactionService;
 
 @RestController
-@RequestMapping(value = "/accounts")
+@RequestMapping(value = "/api/v1/accounts")
 public class AccountController {
 
     @Autowired

@@ -13,7 +13,7 @@ import com.banktest.financial_api.domain.entities.Transaction;
 import com.banktest.financial_api.services.TransactionService;
 
 @RestController
-@RequestMapping(value = "/transactions")
+@RequestMapping(value = "/api/v1/transactions")
 public class TransactionController {
 
     @Autowired
