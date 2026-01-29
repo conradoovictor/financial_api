@@ -138,11 +138,11 @@ Todas as exceções seguem um padrão unificado:
    mvn spring-boot:run
    ```
 4. A aplicação será iniciada em
-   ```bash
+
+  
   http://localhost:8080
-   ```
 
-
+  
 ---
 
 ## Observações finais
