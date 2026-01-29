@@ -1,10 +1,15 @@
 package com.banktest.financial_api.domain.dtos.AccountDTO;
 
+import jakarta.validation.constraints.NotNull;
+
 import com.banktest.financial_api.domain.enums.AccountType;
 
 public class AccountRequestDTO {
 
+    @NotNull(message = "clientId é obrigatório")
     private Integer clientId;
+
+    @NotNull(message = "Tipo da conta é obrigatório")
     private AccountType type;
 
     public AccountRequestDTO() {

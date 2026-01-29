@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.banktest.financial_api.domain.entities.Account;
 import com.banktest.financial_api.domain.enums.AccountType;
+import com.banktest.financial_api.exceptions.ObjectNotFoundException;
 import com.banktest.financial_api.repositories.AccountRepository;
-import com.banktest.financial_api.services.exception.ObjectNotFoundException;
 
 @Service
 public class AccountService {
@@ -43,7 +43,7 @@ public class AccountService {
     public Account update(Account account) {
         Account existing = findByAccountNumber(account.getAccNumber());
         existing.setBalance(account.getBalance());
-        return repo.save(account);
+        return repo.save(existing);
     }
 
     public Account findByAccountNumber(String accNumber) {
@@ -61,13 +61,6 @@ public class AccountService {
         return acc.getBalance();
     }
 
-    public Account deposit(String accNumber, Double value) {
-
-        Account acc = findByAccountNumber(accNumber);
-
-        acc.setBalance(acc.getBalance() + value);
-
-        return repo.save(acc);
-    }
+    
 
 }

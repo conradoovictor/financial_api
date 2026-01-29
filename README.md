@@ -25,7 +25,7 @@ A aplicação expõe endpoints para gerenciamento de clientes, contas bancárias
 
 ### Funcionalidades auxiliares (apoio a testes)
 
-* Endpoint de depósito, criado exclusivamente para viabilizar testes de trânsferencia 
+* Endpoint de depósito, criado exclusivamente para viabilizar testes de transferência 
 * Consulta detalhada de movimentações por conta
 
 ---
@@ -66,19 +66,50 @@ Todos os endpoints seguem o padrão:
 
 ## Documentação da API
 
-A documentação dos endpoints foi realizada utilizando Postman, contendo:
+
+A documentação dos endpoints foi realizada utilizando Postman e Swagger.
+
+O Postman apresenta exemplos práticos de uso e fluxos de negócio, contendo: 
 
 * Exemplos de requisição
 * Exemplos de resposta
 * Códigos HTTP
 * Possíveis erros
 
+Já o Swagger, tem objetivode expor o contrato da API. Permitindo visualizar todos os endpoints disponíveis.
+
+Após subir a aplicação, a documentação pode ser acessada em:
+```text
+http://localhost:8080/swagger-ui/index.html
+```
+
+---
+
+## Testes
+
+Os testes da API foram realizados manualmente por meio do **Postman**, validando:
+
+* Fluxo completo de criação de cliente
+* Criação de conta
+* Depósito
+* Transferência
+* Consulta de saldo
+* Consulta de extrato
+
+
+E por meio do **Swagger**, validando:
+
+ * Visualizar todos os endpoints da API
+ * Identificar métodos HTTP, paths e parâmetros
+ * Ver os modelos de requisição e respostas (DTOs)
+ * Executar chamadas diretamente pela interface
+
 ---
 
 ## Padrão de erro
 
 Todas as exceções seguem um padrão unificado:
-```bash
+```json
 {
   "timestamp": "2026-01-29T18:40:00Z",
   "status": 404,
@@ -90,8 +121,6 @@ Todas as exceções seguem um padrão unificado:
 ```
 
 ---
-
-## Como executar o projeto
 
 ### Pré-requisitos
 
@@ -113,19 +142,6 @@ Todas as exceções seguem um padrão unificado:
   http://localhost:8080
    ```
 
-
----
-
-## Testes
-
-Os testes da API foram realizados manualmente por meio do **Postman**, validando:
-
-* Fluxo completo de criação de cliente
-* Criação de conta
-* Depósito
-* Transferência
-* Consulta de saldo
-* Consulta de extrato
 
 ---
 

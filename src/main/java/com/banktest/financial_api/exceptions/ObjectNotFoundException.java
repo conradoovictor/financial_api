@@ -1,4 +1,4 @@
-package com.banktest.financial_api.services.exception;
+package com.banktest.financial_api.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;
