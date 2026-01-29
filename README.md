@@ -79,10 +79,10 @@ O Postman apresenta exemplos práticos de uso e fluxos de negócio, contendo:
 Já o Swagger, tem objetivode expor o contrato da API. Permitindo visualizar todos os endpoints disponíveis.
 
 Após subir a aplicação, a documentação pode ser acessada em:
-```text
+
+```bash
 http://localhost:8080/swagger-ui/index.html
 ```
-
 ---
 
 ## Testes
