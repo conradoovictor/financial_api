@@ -1,6 +1,8 @@
 package com.banktest.financial_api.controller;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import com.banktest.financial_api.domain.dtos.AccountDTO.AccountRequestDTO;
 import com.banktest.financial_api.domain.dtos.AccountDTO.AccountResponseDTO;
 import com.banktest.financial_api.domain.entities.Account;
 import com.banktest.financial_api.services.AccountService;
+import com.banktest.financial_api.services.TransactionService;
 
 @RestController
 @RequestMapping("/api/v1/accounts")
@@ -17,6 +20,9 @@ public class AccountController {
 
     @Autowired
     private AccountService service;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @PostMapping
     public ResponseEntity<AccountResponseDTO> createAccount(
@@ -50,5 +56,17 @@ public class AccountController {
 
         Double balance = service.getBalance(accNumber);
         return ResponseEntity.ok(balance);
+    }
+
+    @GetMapping("/{accNumber}/transactions")
+    public ResponseEntity<Map<String, Object>> getTransactions(
+            @PathVariable String accNumber,
+            @RequestParam Instant startDate,
+            @RequestParam Instant endDate) {
+
+        Map<String, Object> response = transactionService.getTransactions(accNumber, startDate, endDate);
+
+        return ResponseEntity.ok(response);
+
     }
 }

@@ -3,13 +3,14 @@ package com.banktest.financial_api.exceptions;
 import java.time.Instant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import com.banktest.financial_api.services.exception.ObjectNotFoundException;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
@@ -38,4 +39,21 @@ public class ControllerExceptionHandler {
                 request.getDescription(false));
         return ResponseEntity.status(status).body(err);
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, WebRequest request) {
+        String error = "Erro de validação";
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+
+        String message = e.getBindingResult().getFieldErrors().stream()
+                .map(err -> err.getField() + ": " + err.getDefaultMessage())
+                .findFirst()
+                .orElse("Erro de validação");
+
+        StandardError err = new StandardError(Instant.now(), status.value(), error, message,
+                request.getDescription(false));
+
+        return ResponseEntity.status(status).body(err);
+    }
+
 }
