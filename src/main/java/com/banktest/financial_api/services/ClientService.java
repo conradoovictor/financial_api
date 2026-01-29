@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.banktest.financial_api.domain.entities.Client;
+import com.banktest.financial_api.exceptions.BusinessException;
+import com.banktest.financial_api.exceptions.ObjectNotFoundException;
 import com.banktest.financial_api.repositories.ClientRepository;
-import com.banktest.financial_api.services.exception.ObjectNotFoundException;
 
 @Service
 public class ClientService {
@@ -28,7 +29,7 @@ public class ClientService {
     public Client insert(Client obj) {
         Optional<Client> uniqueCPF = repo.findByClientCpf(obj.getClientCpf());
         if (uniqueCPF.isPresent()) {
-            throw new IllegalArgumentException("CPF já cadastrado");
+            throw new BusinessException("CPF já cadastrado");
         }
 
         obj.setClientId(generateClientId());

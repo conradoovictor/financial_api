@@ -14,6 +14,7 @@ import com.banktest.financial_api.domain.dtos.TransactionDTO.TransactionRequestD
 import com.banktest.financial_api.domain.entities.Account;
 import com.banktest.financial_api.domain.entities.Transaction;
 import com.banktest.financial_api.domain.enums.TransactionType;
+import com.banktest.financial_api.exceptions.BusinessException;
 import com.banktest.financial_api.repositories.TransactionRepository;
 
 @Service
@@ -31,18 +32,22 @@ public class TransactionService {
 
     public Transaction execute(TransactionRequestDTO dto) {
         if (dto.getAccDestiny().equals(dto.getAccOrigin())) {
-            throw new RuntimeException("A transação deve ser feita através de contas distintas");
+            throw new BusinessException("A transação deve ser feita através de contas distintas");
         }
 
         Account origin = service.findByAccountNumber(dto.getAccOrigin());
         Account destiny = service.findByAccountNumber(dto.getAccDestiny());
 
+        if (!origin.getClientId().equals(destiny.getClientId())) {
+            throw new BusinessException("Transferências permitidas apenas entre contas do mesmo cliente");
+        }
+
         if (origin.getBalance() < dto.getValue()) {
             throw new RuntimeException("Saldo insuficiente para efetuar a transação");
         }
 
-        origin.setBalance(origin.getBalance() - dto.getValue());
-        destiny.setBalance(destiny.getBalance() + dto.getValue());
+        service.update(origin);
+        service.update(destiny);
 
         Transaction tx = new Transaction();
         tx.setAccOrigin(dto.getAccOrigin());
@@ -107,7 +112,5 @@ public class TransactionService {
 
         return repo.save(tx);
     }
-
-    
 
 }
