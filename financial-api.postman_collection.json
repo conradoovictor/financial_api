@@ -1,0 +1,816 @@
+{
+	"info": {
+		"_postman_id": "61713eeb-0681-4f63-80ce-9c87815743f1",
+		"name": "Documentação - financial_api",
+		"description": "API RESTful para gerenciamento de clientes, contas bancárias e movimentações financeiras. Desenvolvida em Spring Boot + MongoDB.\n\n## Base URL\n\n/api/v1\n\n## Padrão de Erros\n\nTodas as respostas de erro seguem o padrão:\n\n{  \n\"timestamp\": \"2026-01-29T18:40:00Z\",  \n\"status\": 404,  \n\"error\": \"Recurso não encontrado\",  \n\"message\": \"Conta não encontrada\",  \n\"path\": \"/api/v1/accounts/123\"  \n}",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49556736",
+		"_collection_link": "https://conradoovictor-1472874.postman.co/workspace/d7ea7b9c-ea23-42f8-8a29-9d9d61dc2099/collection/49556736-61713eeb-0681-4f63-80ce-9c87815743f1?action=share&source=collection_link&creator=49556736"
+	},
+	"item": [
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "Criar Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Roberto dos Santos\",\n  \"cpf\": \"191023938471\",\n  \"birthDate\": \"1999-01-10\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"clients"
+							]
+						},
+						"description": "### Criar cliente\n\nCria um novo cliente no sistema.\n\n**Endpoint**  \nPOST /api/v1/clients\n\n**Body**\n\n- name (string)\n    \n- cpf (string, único)\n    \n- birthDate (YYYY-MM-DD)\n    \n\n**Resposta de sucesso (201)**  \n201 created"
+					},
+					"response": [
+						{
+							"name": "201 - Cliente criado",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Roberto dos Santos\",\n  \"cpf\": \"191023938471\",\n  \"birthDate\": \"1999-01-10\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/clients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"clients"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Location",
+									"value": "http://localhost:8080/api/v1/clients/201"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 28 Jan 2026 18:27:18 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "400 - CPF Já cadastrado",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Roberto dos Santos\",\n  \"cpf\": \"12345678901\",\n  \"birthDate\": \"1999-01-10\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/clients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"clients"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 Jan 2026 11:28:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2026-01-29T11:28:24.584021963Z\",\n    \"status\": 400,\n    \"error\": \"Requisição inválida\",\n    \"message\": \"CPF já cadastrado\",\n    \"path\": \"uri=/api/v1/clients\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"clients"
+							]
+						},
+						"description": "### Listar clientes\n\nRetorna a lista de todos os clientes cadastrados no sistema.\n\n**Endpoint**  \nGET /api/v1/clients\n\n**Body**\n\n- name (string)\n    \n- cpf (string, único)\n    \n- birthDate (YYYY-MM-DD)\n    \n\n**Resposta de sucesso (200)**  \nRetorna uma lista de clientes com id, nome, CPF e data de nascimento."
+					},
+					"response": [
+						{
+							"name": "200 - Listar clientes",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/clients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"clients"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 28 Jan 2026 18:20:04 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"clientId\": 1,\n        \"name\": null,\n        \"cpf\": null,\n        \"birthDate\": \"1998-05-20\"\n    },\n    {\n        \"clientId\": 101,\n        \"name\": \"Victor Conrado\",\n        \"cpf\": \"12345678901\",\n        \"birthDate\": \"1998-05-20\"\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "Criar conta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientId\": \"101\",\n  \"type\": \"DEPOSITO\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"accounts"
+							]
+						},
+						"description": "### Criar conta\n\nCria uma nova conta através de um clientId.\n\n**Endpoint**\n\nPOST /api/v1/accounts\n\n**Body**\n\n- clientId (gerado)\n    \n- type (CORRENTE/POUPANCA)\n    \n\nSaldo inicia em 0.0\n\n**Resposta de sucesso (200)**\n\nRetorna os dados da conta criada"
+					},
+					"response": [
+						{
+							"name": "200 - Conta criada",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"clientId\": \"101\",\n  \"type\": \"CORRENTE\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/accounts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"accounts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 28 Jan 2026 18:31:33 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accNumber\": \"817\",\n    \"type\": \"CORRENTE\",\n    \"balance\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar contas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientId\": \"101\",\n  \"type\": \"CORRENTE\"\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/accounts/817",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"817"
+							]
+						},
+						"description": "### Listar contas\n\nExistem dois endpoints, um retorna a lista de todas as contas cadastradas no sistema.\n\n**Endpoint**  \nGET /api/v1/accounts\n\n**Body**\n\n- clientId (gerado)\n    \n- type (CORRENTE/DEPOSITO)\n    \n- balance (double)\n    \n\n**Resposta de sucesso (200)**  \nRetorna uma lista de todas as contas com accNumber, type e balance\n\n---\n\nO outro retorna uma conta específica através do accNumber.\n\n**Endpoint**\n\nGET/api/v1/accounts/{accNumber}\n\n**Body**\n\n- clientId (gerado)\n    \n- type (CORRENTE/DEPOSITO)\n    \n- balance (double)\n    \n\n**Resposta de sucesso (200)**\n\nRetorna a conta referenciada com accNumber, type e balance."
+					},
+					"response": [
+						{
+							"name": "200 - Listar contas",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"clientId\": \"101\",\n  \"type\": \"CORRENTE\"\n}\n"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/accounts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"accounts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 28 Jan 2026 18:39:08 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"accNumber\": \"817\",\n        \"type\": \"CORRENTE\",\n        \"balance\": 0\n    }\n]"
+						},
+						{
+							"name": "200 - Listar contas por número da conta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"clientId\": \"101\",\n  \"type\": \"CORRENTE\"\n}\n"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/accounts/817",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"accounts",
+										"817"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 28 Jan 2026 18:53:40 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accNumber\": \"817\",\n    \"type\": \"CORRENTE\",\n    \"balance\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Consultar saldo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/accounts/817/balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"817",
+								"balance"
+							]
+						},
+						"description": "### Consultar saldo\n\nFaz a consulta apenas do saldo de uma conta específica\n\n**Endpoint**  \nGET /api/v1/accounts/{accNumber/balance\n\n**Body**\n\n- balance (double)\n    \n\n**Resposta de sucesso (200)**  \nRetorna o saldo da conta."
+					},
+					"response": [
+						{
+							"name": "200 - Consulta saldo",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/accounts/817/balance",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"accounts",
+										"817",
+										"balance"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 28 Jan 2026 19:03:30 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "0"
+						}
+					]
+				},
+				{
+					"name": "Consultar transferencia por accNumber",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/accounts/535/transactions?startDate=2026-01-29T00:00:00Z&endDate=2026-01-29T12:39:00Z",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"535",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2026-01-29T00:00:00Z"
+								},
+								{
+									"key": "endDate",
+									"value": "2026-01-29T12:39:00Z"
+								}
+							]
+						},
+						"description": "### Consultar transferencia por número da conta\n\nFaz a consulta de transferencia por número da conta e periodo de tempo\n\n**Endpoint**  \nGET /api/v1/accounts/535/transactions?startDate=2026-01-29T00:00:00Z&endDate=2026-01-29T12:39:00Z\n\n**Body**\n\n- Conta (accNumber(gerado))\n    \n- Saldo atual (balance (double))\n    \n- Transações enviadas/recebidas\n    \n\n\\- Data (statDate(instant))\n\n\\- Valor (value(double))\n\n_ Conta destino (accDestiny(String/Null))\n\n\\- Tipo (transactionType(DEPOSITO/TRANSFERENCIA))\n\n**Resposta de sucesso (200)**  \nRetorna a lista de movimentações da conta no período informado."
+					},
+					"response": [
+						{
+							"name": "200 Consultar transferencia por accNumber",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/accounts/535/transactions?startDate=2026-01-29T00:00:00Z&endDate=2026-01-29T12:39:00Z",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"accounts",
+										"535",
+										"transactions"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2026-01-29T00:00:00Z"
+										},
+										{
+											"key": "endDate",
+											"value": "2026-01-29T12:39:00Z"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 29 Jan 2026 12:44:54 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Conta\": \"535\",\n    \"Saldo atual\": 500,\n    \"Transações enviadas\": [],\n    \"Transações recebidas\": [\n        {\n            \"Data\": \"2026-01-29T12:37:51.854Z\",\n            \"Valor\": 500,\n            \"Conta destino\": null,\n            \"Tipo\": \"DEPOSITO\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Realizar transferência",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accOrigin\": \"817\",\n  \"accDestiny\": \"247\",\n  \"value\": 150.00\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/transactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"transactions"
+							]
+						},
+						"description": "### Realizar Transferência\n\nRealiza uma transferência entre contas, com validação de saldo negativo e contas do mesmo cliente.\n\n**Endpoint**  \nPOST /api/v1/transactions\n\n**Body**\n\n- id (gerado)\n    \n- accOrigin (String)\n    \n- accDestiny (String)\n    \n- value (double)\n    \n- type (TRANSFERENCIA)\n    \n- moment (instant)\n    \n\n**Resposta de sucesso (200)**  \nRetorna os dados da transferência"
+					},
+					"response": [
+						{
+							"name": "Realizar transferência",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"accOrigin\": \"817\",\n  \"accDestiny\": \"247\",\n  \"value\": 150.00\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/transactions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"transactions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 28 Jan 2026 20:10:22 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"697a6d2e6301056c91e9526d\",\n    \"accOrigin\": \"817\",\n    \"accDestiny\": \"247\",\n    \"value\": 150,\n    \"type\": \"TRANSFERENCIA\",\n    \"moment\": \"2026-01-28T20:10:22.701553782Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Realizar Depósito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accNumber\": \"817\",\n  \"value\": 500.0\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/transactions/deposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"transactions",
+								"deposit"
+							]
+						},
+						"description": "### Realizar Depósito\n\nRealiza um depósito em uma conta específica, esse endpoint foi criado para facilitar os testes de transações\n\n**Endpoint**  \nPOST /api/v1/transactions/deposit\n\n**Body**\n\n- id (gerado)\n    \n- accOrigin (String)\n    \n- accDestiny (String)\n    \n- value (double)\n    \n- type (DEPOSITO)\n    \n- moment (instant)\n    \n\n**Resposta de sucesso (200)**  \nRetorna os dados da transferência"
+					},
+					"response": [
+						{
+							"name": "Realizar Depósito",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"accNumber\": \"817\",\n  \"value\": 500.0\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/transactions/deposit",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"transactions",
+										"deposit"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 28 Jan 2026 19:40:13 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"697a661d6301056c91e9526c\",\n    \"accOrigin\": null,\n    \"accDestiny\": \"817\",\n    \"value\": 500,\n    \"type\": \"DEPOSITO\",\n    \"moment\": \"2026-01-28T19:40:13.511091960Z\"\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
